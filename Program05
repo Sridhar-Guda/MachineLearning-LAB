@@ -1,0 +1,62 @@
+import pandas as pd
+data =pd.read_csv("data2_csv.csv")
+#making columns of dataset as list
+lst_columns = list(data.columns)
+#prints columns to choose 
+def printCol():
+     for i in range(len(lst_columns)):
+        print(i+1,".",lst_columns[i])
+#prints unique records of choosen attribute
+def printUniq(n):
+    lst = list(data[lst_columns[n-1]].unique())
+    for i in range(len(lst)):
+        print(i+1,".",lst[i])
+    return lst
+#returns no of time a record occured in column
+def count(n1,n):
+    x=data[lst_columns[n-1]]
+    lst = list(data[lst_columns[n-1]].unique())
+    n1 = lst[n1-1]
+    c = 0
+    for i in range(len(data)):
+        if x[i]==n1:
+            c+=1
+    return c
+def Uncondtional():
+  print("*"*100)
+  print("---UNCONDITIONAL PROBABILITY---")
+  print("*"*100)
+  printCol()
+  n=int(input("Choose the Attribute: "))
+  printUniq(n)
+  n1 = int(input("Choose the Record: "))
+  n2=count(n1,n)
+  print("The UnConditional Probability is: ",n2/len(data))
+def conditional():
+  print("*"*100)
+  print("---CONDITIONAL PROBABILITY---")
+  print("*"*100)
+  printCol()
+  n = int(input("Choose the First Attribute: "))
+  x=lst_columns[n-1]
+  l1=printUniq(n)
+  n1 = int(input("Choose the First Record Value: "))
+  y=l1[n1-1]
+  printCol()
+  n2 = int(input("Choose the Second Attribute: "))
+  l2=printUniq(n2)
+  n3 = int(input("Choose the Second Record Value: "))
+  a = lst_columns[n2-1]
+  b = l2[n3-1]
+  newdf = data.loc[(data[x]==y),[x,a]]
+  newdf1 = newdf.loc[data[a]==b]
+  newdf2 = data.loc[data[a]==b]
+  print("The Conditional Probability is: ",len(newdf1)/len(newdf2))
+print("1.Conditional\n2.Unconditonal")
+choice = int(input("Enter your choice: "))
+if choice==1:
+  conditional()
+elif choice==2:
+  Uncondtional()
+else:
+  print("Invalid Choice")
