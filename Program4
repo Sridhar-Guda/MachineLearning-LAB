@@ -1,0 +1,63 @@
+import matplotlib.pyplot as plt
+from math import *
+no_of_clusters = 3
+#taking centroids randomly
+c1 = (1.713,1.586)
+c2 = (0.180,1.786)
+c3 = (0.353,1.240)
+c1_l = [c1]
+c2_l = [c2]
+c3_l = [c3]
+def ans(x):
+    global c1,c2,c3
+    c1_dist = sqrt((c1[0]-x[0])**2 + (c1[1]-x[1])**2)
+    c2_dist = sqrt((c2[0]-x[0])**2 + (c2[1]-x[1])**2)
+    c3_dist = sqrt((c3[0]-x[0])**2 + (c3[1]-x[1])**2)
+    minimum = min(c1_dist, c2_dist, c3_dist)
+    if minimum==c1_dist:
+        print("Belongs to Cluster 1")
+    elif minimum==c2_dist:
+        print("Belongs to Cluster 2")
+    elif minimum==c3_dist:
+        print("Belongs to Cluster 3")
+def distance(x):
+    global c1,c2,c3,c1_l,c2_l,c3_l
+    c1_dist = sqrt((c1[0]-x[0])**2 + (c1[1]-x[1])**2)
+    c2_dist = sqrt((c2[0]-x[0])**2 + (c2[1]-x[1])**2)
+    c3_dist = sqrt((c3[0]-x[0])**2 + (c3[1]-x[1])**2)
+    minimum = min(c1_dist, c2_dist, c3_dist)
+    if minimum==c1_dist:
+        c1 = ((c1[0]+x[0])/2,(c1[1]+x[1])/2)
+        c1_l.append(x)
+    if minimum==c2_dist:
+        c2 = ((c2[0]+x[0])/2,(c2[1]+x[1])/2)
+        c2_l.append(x)
+    if minimum==c3_dist:
+        c3 = ((c3[0]+x[0])/2,(c3[1]+x[1])/2)
+        c3_l.append(x)
+    return c1,c2,c3
+datapoints = [(1.713,1.586,0),(0.180,1.786,1),(0.353,1.240,1),(0.940,1.566,0),(1.486,0.759,1),(1.266,1.106,0),(1.540,0.419,1),(0.459,1.799,1),(0.773,0.186,1)]
+x1 = float(input("Enter the x value: "))
+y1 = float(input("Enter the y value: "))
+find_point = (x1, y1)
+for i in datapoints:
+    distance(i)
+ans(find_point)
+xs = [x[0] for x in datapoints]
+ys = [x[1] for x in datapoints]
+plt.scatter(xs, ys)
+plt.show()
+xs = [x[0] for x in c1_l]
+ys = [x[1] for x in c1_l]
+plt.scatter(xs, ys)
+xs = [x[0] for x in c2_l]
+ys = [x[1] for x in c2_l]
+plt.scatter(xs, ys)
+xs = [x[0] for x in c3_l]
+ys = [x[1] for x in c3_l]
+plt.scatter(xs, ys)
+plt.scatter(c1[0], c1[1],marker="*")
+plt.scatter(c2[0], c2[1],marker="*")
+plt.scatter(c3[0], c3[1],marker="*")
+plt.scatter(x1, y1)
+plt.show()
