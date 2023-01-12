@@ -1,0 +1,4 @@
+P_absent = float(input("Enter probability of Absent: "))
+P_friday = float(input("Enter Probability that is Friday: "))
+P = (P_absent/P_friday)*100
+print("Probability that Absent on Friday is: ",P,"%")
